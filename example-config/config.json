@@ -1,0 +1,19 @@
+{
+  "exclude_patterns": [
+    "node_modules",
+    ".git",
+    ".svn",
+    ".hg",
+    "target",
+    "dist",
+    "build",
+    "*.log",
+    ".DS_Store",
+    "__pycache__",
+    ".pytest_cache",
+    ".venv",
+    "venv"
+  ],
+  "max_depth": 10,
+  "max_files": 100000
+}
