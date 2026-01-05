@@ -5,17 +5,17 @@ import (
 	"unsafe"
 )
 
-// SelectedPath は選択されたパス情報♠
+// SelectedPath は選択されたパス情報
 type SelectedPath struct {
 	Path string
 }
 
-// InjectToShell はパスをシェルの入力バッファに注入♥
+// InjectToShell はパスをシェルの入力バッファに注入
 func InjectToShell(text string) error {
 	fd := int(syscall.Stdin)
 
-	// TIOCSTI: Simulate Terminal Input♠
-	// 各文字をターミナルに注入する♧
+	// TIOCSTI: Simulate Terminal Input
+	// 各文字をターミナルに注入する
 	for _, ch := range text {
 		b := byte(ch)
 		_, _, errno := syscall.Syscall(

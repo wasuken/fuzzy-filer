@@ -1,6 +1,6 @@
 package main
 
-// KeyMap はキーバインド設定♥
+// KeyMap はキーバインド設定
 type KeyMap struct {
 	Quit        rune
 	Up          rune
@@ -10,7 +10,7 @@ type KeyMap struct {
 	DeleteQuery rune
 }
 
-// DefaultKeyMap はデフォルトキーマップ♠
+// DefaultKeyMap はデフォルトキーマップ
 func DefaultKeyMap() KeyMap {
 	return KeyMap{
 		Quit:        'q',  // 終了
@@ -22,5 +22,5 @@ func DefaultKeyMap() KeyMap {
 	}
 }
 
-// TODO: 将来的に設定ファイル（~/.config/fuzzy-filer/config.yaml）から読み込む♧
-// これでユーザーが自由にカスタマイズできる♥
+// TODO: 将来的に設定ファイル（~/.config/fuzzy-filer/config.yaml）から読み込む
+// これでユーザーが自由にカスタマイズできる

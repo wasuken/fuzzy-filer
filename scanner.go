@@ -14,14 +14,14 @@ type FileEntry struct {
 	DirPath string // 親ディレクトリパス
 }
 
-// ScanFiles は指定ディレクトリ配下を走査する♠
+// ScanFiles は指定ディレクトリ配下を走査する
 func ScanFiles(rootDir string, config Config) ([]FileEntry, error) {
 	var entries []FileEntry
 	fileCount := 0
 
 	err := filepath.WalkDir(rootDir, func(path string, d os.DirEntry, err error) error {
 		if err != nil {
-			return nil // エラーは無視して継続♧
+			return nil // エラーは無視して継続
 		}
 
 		// rootDir自体はスキップ
@@ -29,10 +29,10 @@ func ScanFiles(rootDir string, config Config) ([]FileEntry, error) {
 			return nil
 		}
 
-		// 相対パス計算♥
+		// 相対パス計算
 		relPath, _ := filepath.Rel(rootDir, path)
 
-		// 深度チェック♠
+		// 深度チェック
 		depth := strings.Count(relPath, string(os.PathSeparator)) + 1
 		if depth > config.MaxDepth {
 			if d.IsDir() {
@@ -41,7 +41,7 @@ func ScanFiles(rootDir string, config Config) ([]FileEntry, error) {
 			return nil
 		}
 
-		// 除外パターンチェック♧
+		// 除外パターンチェック
 		if shouldExclude(relPath, config.ExcludePatterns) {
 			if d.IsDir() {
 				return filepath.SkipDir
@@ -49,7 +49,7 @@ func ScanFiles(rootDir string, config Config) ([]FileEntry, error) {
 			return nil
 		}
 
-		// 隠しファイル/ディレクトリはスキップ♥
+		// 隠しファイル/ディレクトリはスキップ
 		if strings.HasPrefix(d.Name(), ".") {
 			if d.IsDir() {
 				return filepath.SkipDir
@@ -57,10 +57,10 @@ func ScanFiles(rootDir string, config Config) ([]FileEntry, error) {
 			return nil
 		}
 
-		// ファイル数上限チェック♠
+		// ファイル数上限チェック
 		fileCount++
 		if fileCount > config.MaxFiles {
-			return filepath.SkipAll // これ以上スキャンしない♧
+			return filepath.SkipAll // これ以上スキャンしない
 		}
 
 		dirPath := filepath.Dir(relPath)
