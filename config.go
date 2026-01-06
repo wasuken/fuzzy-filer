@@ -34,8 +34,10 @@ func DefaultConfig() Config {
 			".venv",
 			"venv",
 		},
-		MaxDepth: 10,     // 10階層まで
-		MaxFiles: 100000, // 10万ファイルまで
+		MaxDepth:      10,     // 10階層まで
+		MaxFiles:      100000, // 10万ファイルまで
+		EnablePreview: true,
+		PreviewLines:  20,
 	}
 }
 

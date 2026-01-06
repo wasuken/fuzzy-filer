@@ -89,9 +89,11 @@ func main() {
 // renderToTTY は画面を再描画（tty出力版）
 func renderToTTY(m *Model, tty *os.File) {
 	// カーソルを左上に移動して描画
-	fmt.Fprint(tty, "\033[H")
+	// 	fmt.Fprint(tty, "\033[H")
+	// 	fmt.Fprint(tty, m.View())
+	// fmt.Fprint(tty, "\033[K") // 行末までクリア
+	fmt.Fprint(tty, "\033[2J\033[H")
 	fmt.Fprint(tty, m.View())
-	fmt.Fprint(tty, "\033[K") // 行末までクリア
 }
 
 // setRawModeForFd は指定fdをrawモードに設定
