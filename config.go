@@ -12,6 +12,8 @@ type Config struct {
 	ExcludePatterns []string `json:"exclude_patterns"` // 除外パターン
 	MaxDepth        int      `json:"max_depth"`        // 最大探索深度
 	MaxFiles        int      `json:"max_files"`        // 最大ファイル数
+	EnablePreview   bool     `json:"enable_preview"`   // プレビュー有効化
+	PreviewLines    int      `json:"preview_lines"`    // プレビュー行数
 }
 
 // DefaultConfig はデフォルト設定

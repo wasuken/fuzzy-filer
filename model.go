@@ -19,6 +19,7 @@ type Model struct {
 	config          Config
 	width           int
 	height          int
+	previewCache    []string // プレビュー内容キャッシュ
 }
 
 // NewModel は新しいモデルを作成
@@ -48,7 +49,11 @@ func NewModel(startDir string) (*Model, error) {
 		config:          config,
 		width:           width,
 		height:          height,
+		previewCache:    nil,
 	}
+
+	// 初期プレビュー生成
+	m.updatePreview()
 
 	return m, nil
 }
@@ -59,6 +64,19 @@ func (m *Model) updateFilter() {
 	if m.cursor >= len(m.filteredEntries) {
 		m.cursor = max(0, len(m.filteredEntries)-1)
 	}
+	m.updatePreview()
+}
+
+// updatePreview はプレビューを更新
+func (m *Model) updatePreview() {
+	if !m.config.EnablePreview || len(m.filteredEntries) == 0 {
+		m.previewCache = nil
+		return
+	}
+
+	selected := m.filteredEntries[m.cursor]
+	fullPath := filepath.Join(m.currentDir, selected.Path)
+	m.previewCache = GeneratePreview(fullPath, m.config.PreviewLines)
 }
 
 // changeDirectory はディレクトリ変更
@@ -115,7 +133,7 @@ func (m *Model) View() string {
 
 	// フッター: 操作説明
 	b.WriteString("\n")
-	b.WriteString("\033[2m[j/k]移動 [Enter]選択 [q]終了\033[0m")
+	b.WriteString("\033[2m[Ctrl+N/P]移動 [Enter]選択 [Ctrl+D]終了\033[0m")
 
 	return b.String()
 }
@@ -129,11 +147,13 @@ func (m *Model) HandleInput(r rune) (bool, string, error) {
 	case r == m.keymap.Down:
 		if m.cursor < len(m.filteredEntries)-1 {
 			m.cursor++
+			m.updatePreview()
 		}
 
 	case r == m.keymap.Up:
 		if m.cursor > 0 {
 			m.cursor--
+			m.updatePreview()
 		}
 
 	case r == m.keymap.Enter:

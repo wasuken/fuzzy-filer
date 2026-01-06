@@ -13,9 +13,9 @@ type KeyMap struct {
 // DefaultKeyMap はデフォルトキーマップ
 func DefaultKeyMap() KeyMap {
 	return KeyMap{
-		Quit:        'q',  // 終了
-		Up:          'k',  // 上移動（Vim風）
-		Down:        'j',  // 下移動（Vim風）
+		Quit:        0x04, // 終了
+		Up:          0x10, // 上移動
+		Down:        0x0e, // 下移動
 		Enter:       '\r', // 選択/ディレクトリ移動
 		Backspace:   '\b', // クエリ削除
 		DeleteQuery: 0x7f, // DELキー
